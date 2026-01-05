@@ -42,6 +42,15 @@ body {
     margin-bottom: 10px;
 }
 
+.history {
+    color: var(--btn-gray);
+    font-size: 2.5rem;
+    text-align: right;
+    min-height: 3rem;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 .display {
     color: var(--text-white);
     font-size: 5rem;
