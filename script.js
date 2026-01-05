@@ -9,6 +9,7 @@ let stack = [];
 
 // DOM Elements
 const display = document.getElementById('display');
+const historyDisplay = document.getElementById('history');
 const buttonsContainer = document.querySelector('.buttons');
 
 // Update display
@@ -21,6 +22,29 @@ function updateDisplay() {
         }
     }
     display.textContent = displayValue;
+}
+
+// Get display symbol for operator
+function getDisplayOperator(op) {
+    switch (op) {
+        case '/': return '&divide;';
+        case '*': return '&times;';
+        case '-': return '&minus;';
+        case '+': return '+';
+        case 'power': return '^';
+        case 'yroot': return ' yroot ';
+        case 'ee': return 'E';
+        default: return op;
+    }
+}
+
+// Update history display
+function updateHistory() {
+    if (operator && previousInput !== null) {
+        historyDisplay.innerHTML = `${previousInput} ${getDisplayOperator(operator)}`;
+    } else {
+        historyDisplay.innerHTML = '';
+    }
 }
 
 // Clear active operator highlights
@@ -113,6 +137,7 @@ function handleOperator(op) {
     previousInput = currentInput;
     operator = op;
     awaitingNextValue = true;
+    updateHistory();
     highlightOperator(op);
 }
 
@@ -145,6 +170,7 @@ function calculate() {
     previousInput = null;
     awaitingNextValue = true;
     clearActiveOperators();
+    updateHistory();
     updateDisplay();
 }
 
@@ -182,6 +208,7 @@ buttonsContainer.addEventListener('click', (e) => {
         awaitingNextValue = false;
         stack = [];
         clearActiveOperators();
+        updateHistory();
         updateDisplay();
     }
 
@@ -265,6 +292,7 @@ document.addEventListener('keydown', (event) => {
         awaitingNextValue = false;
         stack = [];
         clearActiveOperators();
+        updateHistory();
         updateDisplay();
     }
 
